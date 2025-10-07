@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Interactive Treasure Hunt</title>
+    <style>body{font-family:system-ui,sans-serif;margin:2rem} form p{margin:.5rem 0}</style>
+  </head>
+  <body>
+    <h1>Interactive Treasure Hunt</h1>
+    <form method="post">
+      {% csrf_token %}
+      <p>{{ form.number.label_tag }} {{ form.number }}</p>
+      <p>{{ form.text.label_tag }} {{ form.text }}</p>
+      <button type="submit">Solve</button>
+    </form>
+
+    {% if result %}
+      <h2>Results</h2>
+      <p>{{ result.number_msg }}</p>
+      <p><strong>Binary:</strong> {{ result.binary }}</p>
+      <p><strong>Vowels:</strong> {{ result.vowel_count }}</p>
+      <h3>Treasure Hunt</h3>
+      <p><strong>Secret:</strong> {{ result.secret }}</p>
+      <ul>{% for line in result.attempts %}<li>{{ line }}</li>{% endfor %}</ul>
+      <p>{{ result.win|yesno:"You found the treasure!,The treasure slipped away." }}</p>
+    {% endif %}
+  </body>
+</html>
